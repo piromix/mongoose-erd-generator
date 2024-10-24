@@ -19,7 +19,9 @@
   "scripts": {
     "mongoose-erd-generator": "node ./dist/bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "svg:comment": "This is a comment for svg script, DO NOT USE! The svg script requires specifying the directory path of the mongoose model with -p, and additionally specifying the output file with -o. example: npm run svg -p ./src/models -o ./erd.svg",
+    "svg": "ts-node --project tsconfig.json ./bin/index.ts -f svg -c white -i"
   },
   "author": "",
   "license": "ISC"
