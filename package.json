@@ -2,22 +2,26 @@
   "name": "mongoose-erd-generator",
   "version": "0.0.5",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "dependencies": {
+    "@viz-js/viz": "^3.9.0",
     "commander": "^2.15.1",
-    "mongoose": "^5.1.2",
-    "viz.js": "^2.0.0"
+    "mongoose": "^8.7.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/node": "^22.7.9",
     "typescript": "^4.3.5"
   },
   "bin": {
-    "mongoose-erd-generator": "./bin/index.js"
+    "mongoose-erd-generator": "./dist/bin/index.js"
   },
   "scripts": {
-    "mongoose-erd-generator": "node ./bin/index.js",
+    "mongoose-erd-generator": "node ./dist/bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc",
+    "svg:comment": "This is a comment for svg script, DO NOT USE! The svg script requires specifying the directory path of the mongoose model with -p, and additionally specifying the output file with -o. example: npm run svg -p ./src/models -o ./erd.svg",
+    "svg": "ts-node --project tsconfig.json ./bin/index.ts -f svg -c white -i"
   },
   "author": "",
   "license": "ISC"
