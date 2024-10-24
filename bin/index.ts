@@ -31,18 +31,16 @@ const loadModels = (dir: string): void => {
     const fullPath = path.join(dir, file);
     if (fs.statSync(fullPath).isDirectory()) {
       loadModels(fullPath);
-    } else if (file.endsWith('.js') && (!ignoreIndex || file !== 'index.js')) {
-      const model = require(fullPath);
-      if (model instanceof mongoose.Model) {
-        models.push(model);
-      }
+    } else if (file.endsWith('.ts') && (!ignoreIndex || file !== 'index.ts')) {
+      const model = require(fullPath).default || require(fullPath);
+      models.push(model);
     }
   });
 };
 
 loadModels(modelsPath);
 
-generateFromModels(models, { format, collection: { backgroundColor: color, nameColor: color } })
+generateFromModels(models, { format, collection: { backgroundColor: color || '#4477c9', nameColor: "lightblue"} })
   .then((output) => {
     if (outputPath && output) {
       fs.writeFileSync(outputPath, output);

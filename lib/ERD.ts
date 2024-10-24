@@ -1,7 +1,7 @@
+// noinspection t
+
 import mongoose, { Schema, Model } from 'mongoose';
-import Viz, { Module, render } from 'viz.js';
-import fs from 'fs';
-import util from 'util';
+import Viz from '@viz-js/viz';
 import { Collection, ERD } from './DS';
 
 interface FieldOptions {
@@ -16,14 +16,15 @@ interface RelationConfig {
   localField: {
     type: string;
     index: number;
-    required: boolean;
+    required?: boolean;
   };
 }
 
+const modelNameToCollectionName: Record<string, string> = {};
 const parseModel = (
-  model: Model<any>,
+  model: any,
   erd: ERD,
-  models: Record<string, Model<any>>,
+  models: Record<string, any>,
   relations: Record<string, Record<string, RelationConfig[]>>,
   options: any,
   fake: boolean = false
@@ -87,7 +88,7 @@ const parseModel = (
 
       if (paths[key] instanceof Schema.Types.DocumentArray) {
         const fakeCollectionName = `${collectionName}_${key}`;
-        paths[key].collection = { collectionName: fakeCollectionName };
+        (paths[key] as any).collection = { collectionName: fakeCollectionName };
         models[fakeCollectionName] = paths[key];
         if (!relations[collectionName]) {
           relations[collectionName] = {};
@@ -114,13 +115,8 @@ const generateFromModels = async (
   options: any = {}
 ): Promise<string | undefined> => {
   try {
-    let viz = new Viz({
-      Module,
-      render,
-    });
-    const erd = new ERD();
+    const erd = new ERD("");
     const relations: Record<string, Record<string, RelationConfig[]>> = {};
-    const modelNameToCollectionName: Record<string, string> = {};
     const models: Record<string, Model<any>> = {};
 
     for (const model of modelsArray) {
@@ -139,7 +135,8 @@ const generateFromModels = async (
       }
     }
 
-    return await viz.renderString(erd.generate(), { format: options.format });
+    const viz = await Viz.instance();
+    return viz.renderString(erd.generate(), { format: options.format });
   } catch (e) {
     console.log(e);
   }
