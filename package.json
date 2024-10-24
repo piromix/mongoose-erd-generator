@@ -6,7 +6,8 @@
   "dependencies": {
     "@viz-js/viz": "^3.9.0",
     "commander": "^2.15.1",
-    "mongoose": "^8.7.2"
+    "mongoose": "^8.7.2",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/node": "^22.7.9",
