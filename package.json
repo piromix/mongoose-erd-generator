@@ -4,9 +4,9 @@
   "description": "",
   "main": "dist/index.js",
   "dependencies": {
+    "@viz-js/viz": "^3.9.0",
     "commander": "^2.15.1",
-    "mongoose": "^5.1.2",
-    "viz.js": "^2.0.0"
+    "mongoose": "^5.1.2"
   },
   "devDependencies": {
     "typescript": "^4.3.5"
